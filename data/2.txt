@@ -1,0 +1,7 @@
+computer
+RedHat 10
+data 1
+laptop
+mouse 2
+LAPTOP 3
+debian 3
