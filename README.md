@@ -13,6 +13,6 @@ $ minisort опции путь_к_файлу
 -u    не выводить повторяющиеся строки  
 
 ## Примеры
-go run .\cmd\main.go data/2.txt 
-go run .\cmd\main.go -k 2 data/2.txt
-go run .\cmd\main.go -c -k 2 data/2.txt
+  go run .\cmd\main.go data/2.txt  
+  go run .\cmd\main.go -k 2 data/2.txt  
+  go run .\cmd\main.go -c -k 2 data/2.txt  
