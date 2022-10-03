@@ -16,12 +16,12 @@ func main() {
 	flag := flag.NewFlagSet("mini-sort", flag.ExitOnError)
 	getConfing := config.Export(flag)
 
-	if err := flag.Parse(os.Args[2:]); err != nil {
+	if err := flag.Parse(os.Args[1:]); err != nil {
 		log.Fatalln(err)
 	}
 
 	config := getConfing()
-	path := os.Args[1]
+	path := os.Args[len(os.Args)-1]
 
 	file, err := os.Open(path)
 	if err != nil {
@@ -31,7 +31,6 @@ func main() {
 
 	t := minisort.New(config)
 	t.Read(file, " ")
-	fmt.Println(config)
 
 	if config.C {
 		if i := t.Check(); i != -1 {
