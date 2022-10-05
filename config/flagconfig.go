@@ -10,6 +10,7 @@ type FlagConfig struct {
 	U bool
 	B bool
 	C bool
+	M bool
 }
 
 func Export(flag *flag.FlagSet) func() *FlagConfig {
@@ -22,12 +23,17 @@ func Export(flag *flag.FlagSet) func() *FlagConfig {
 	flag.BoolVar(&c.U, "u", false, "не выводить повторяющиеся строки")
 	flag.BoolVar(&c.B, "b", false, "игнорировать начальные пробелы")
 	flag.BoolVar(&c.C, "c", false, "проверить отсортированы ли данные")
+	flag.BoolVar(&c.M, "M", false, "отсортировать по месяцам")
 
 	return func() *FlagConfig {
 		c.K -= 1
 
 		if c.K < 0 {
 			c.K = 0
+		}
+
+		if c.M && c.N {
+			c.M = false
 		}
 
 		return &c

@@ -34,7 +34,7 @@ func main() {
 
 	if config.C {
 		if i := t.Check(); i != -1 {
-			fmt.Printf("mini-sort: %s: %d: %s", path, i+1, cstrings.BuildFromWords(t.GetRow(i)...))
+			fmt.Printf("mini-sort: %s: %d: %s", path, i+1, cstrings.BuildFromWords(" ", t.GetRow(i)...))
 		}
 	} else {
 		t.Sort()

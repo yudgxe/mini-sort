@@ -9,6 +9,7 @@ import (
 
 	"github.com/yudgxe/mini-sort/config"
 	"github.com/yudgxe/mini-sort/cstrings"
+	"github.com/yudgxe/mini-sort/months"
 )
 
 type Table struct {
@@ -21,19 +22,6 @@ func New(c *config.FlagConfig) *Table {
 	return &Table{
 		c: c,
 	}
-}
-
-func (t *Table) getValueInt(i, j int) (int, error) {
-	if j > len(t.Matrix[i])-1 {
-		return 0, nil
-	}
-
-	v, err := strconv.Atoi(strings.TrimLeft(t.Matrix[i][j], " "))
-	if err != nil {
-		return 0, err
-	}
-
-	return v, nil
 }
 
 func (t *Table) len(col int) int {
@@ -53,15 +41,33 @@ func (t *Table) Len() int {
 }
 
 func (t *Table) Less(i, j int) bool {
-	condition := t.GetValue(i, t.c.K) < t.GetValue(j, t.c.K)
+	v1 := t.GetValue(i, t.c.K)
+	v2 := t.GetValue(j, t.c.K)
 
-	if t.c.N {
-		v1, err1 := t.getValueInt(i, t.c.K)
-		v2, err2 := t.getValueInt(j, t.c.K)
+	condition := v1 < v2
+
+	f := func(f func(string) (int, error)) {
+		v1, err1 := f(v1)
+		v2, err2 := f(v2)
 
 		if err1 == nil && err2 == nil {
 			condition = v1 < v2
 		}
+	}
+
+	if t.c.M {
+		f(months.Parse)
+	}
+
+	if t.c.N {
+		f(func(s string) (int, error) {
+			v, err := strconv.Atoi(strings.TrimLeft(s, " "))
+			if err != nil {
+				return 0, err
+			}
+
+			return v, nil
+		})
 	}
 
 	if t.c.R {
