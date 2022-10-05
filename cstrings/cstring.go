@@ -30,12 +30,15 @@ func AddRune(s string, r rune, size int) string {
 	return sb.String()
 }
 
-func BuildFromWords(args ...string) string {
+func BuildFromWords(sep string, args ...string) string {
 	var sb strings.Builder
+	size := len(args)-1
 
-	for _, v := range args {
-		sb.WriteString(v + " ")
+	for i := 0; i < size; i++ {
+		sb.WriteString(args[i] + sep)
 	}
+
+	sb.WriteString(args[size])
 
 	return sb.String()
 }
